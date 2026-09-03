@@ -178,7 +178,34 @@ function App() {
                     </tbody>
                   </table>
                 </div>
-                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
+                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
+                  <button 
+                    onClick={() => {
+                      const csv = ["Transaction ID,Date,Product,Region,Amount", ...salesData.map((row: any) => `${row.id},${row.date},${row.product},${row.region},"${row.amount}"`)].join("\n");
+                      const blob = new Blob([csv], { type: 'text/csv' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'sales_data_export.csv';
+                      a.click();
+                      setMessage("Sales Data successfully exported as CSV!");
+                    }}
+                    style={{ padding: '0.5rem 1rem', cursor: 'pointer', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Save size={16} /> Save as CSV
+                  </button>
+                  <button 
+                    onClick={() => {
+                      const blob = new Blob([JSON.stringify(salesData, null, 2)], { type: 'application/json' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'sales_data_export.json';
+                      a.click();
+                      setMessage("Sales Data successfully exported as JSON!");
+                    }}
+                    style={{ padding: '0.5rem 1rem', cursor: 'pointer', backgroundColor: '#6366f1', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Save size={16} /> Save as JSON
+                  </button>
                   <button 
                     onClick={() => {
                       const product = window.prompt("Enter Product Name:", "Custom Service");
