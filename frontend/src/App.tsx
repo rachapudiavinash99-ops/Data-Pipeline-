@@ -178,6 +178,25 @@ function App() {
                     </tbody>
                   </table>
                 </div>
+                <div style={{ marginTop: '1rem', display: 'flex', justifyContent: 'flex-end' }}>
+                  <button 
+                    onClick={() => {
+                      const product = window.prompt("Enter Product Name:", "Custom Service");
+                      if (!product) return;
+                      const region = window.prompt("Enter Region:", "Global");
+                      if (!region) return;
+                      const amount = window.prompt("Enter Dollar Amount (e.g., $10,000):", "$5,000");
+                      if (!amount) return;
+                      
+                      const newId = `TRX-M${Math.floor(Math.random() * 9000) + 1000}`;
+                      const today = new Date().toISOString().split('T')[0];
+                      
+                      setSalesData([{ id: newId, date: today, product, region, amount }, ...salesData]);
+                    }}
+                    style={{ padding: '0.5rem 1rem', cursor: 'pointer', backgroundColor: '#2563eb', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Plus size={16} /> Add Manual Entry
+                  </button>
+                </div>
               </div>
             )}
           </div>
