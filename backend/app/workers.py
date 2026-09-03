@@ -1,4 +1,4 @@
-﻿import time
+import time
 
 def execute_pipeline_task(pipeline_id: int):
     print(f"Executing pipeline {pipeline_id} in background")

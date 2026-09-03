@@ -49,6 +49,7 @@ function App() {
             { id: 'TRX-905', date: '2026-09-01', product: 'Enterprise License', region: 'South America', amount: '$45,000' }
           ]);
           setMessage("Sales Data Pipeline execution completed! Data warehouse updated.");
+          fetchPipelines();
         }, 1500);
       }
     } catch (err) {
@@ -57,14 +58,31 @@ function App() {
     setLoading(false);
   };
 
-  const storeData = (id: number) => {
+  const storeData = async (id: number) => {
+    setLoading(true);
     setMessage(`Storing data for Pipeline #${id} into the primary data warehouse...`);
-    setTimeout(() => setMessage(`Data for Pipeline #${id} successfully stored!`), 1500);
+    try {
+      // Assuming you might add a store endpoint later, or just simulate it here
+      setTimeout(() => {
+        setMessage(`Data for Pipeline #${id} successfully stored!`);
+        setLoading(false);
+      }, 1500);
+    } catch (err) {}
   };
 
-  const transferData = (id: number) => {
+  const transferData = async (id: number) => {
+    setLoading(true);
     setMessage(`Initiating data transfer for Pipeline #${id} to secondary location...`);
-    setTimeout(() => setMessage(`Data for Pipeline #${id} successfully transferred!`), 1500);
+    try {
+      const res = await axios.post(`/api/pipelines/` + id + `/transfer`);
+      setTimeout(() => {
+        setMessage(res.data.message);
+        fetchPipelines();
+      }, 1500);
+    } catch (err) {
+      setMessage(`Error transferring pipeline ` + id);
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
