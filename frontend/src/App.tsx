@@ -32,13 +32,13 @@ function App() {
     setLoading(false);
   };
 
-  const runPipeline = async (id) => {
+  const runPipeline = async (id: number) => {
     setLoading(true);
     try {
-      const res = await axios.post(/api/pipelines//run);
+      const res = await axios.post(`/api/pipelines/${id}/run`);
       setMessage(res.data.message);
     } catch (err) {
-      setMessage(Error running pipeline .);
+      setMessage(`Error running pipeline ${id}.`);
     }
     setLoading(false);
   };
@@ -106,7 +106,7 @@ function App() {
                   </tr>
                 </thead>
                 <tbody>
-                  {pipelines.map(p => (
+                  {pipelines.map((p: any) => (
                     <tr key={p.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
                       <td style={{ padding: '1rem', color: '#0f172a', fontWeight: 500 }}>#{p.id}</td>
                       <td style={{ padding: '1rem', color: '#334155' }}>{p.name}</td>
