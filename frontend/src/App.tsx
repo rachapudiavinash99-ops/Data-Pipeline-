@@ -39,16 +39,21 @@ function App() {
       const res = await axios.post(`/api/pipelines/${id}/run`);
       setMessage(res.data.message);
       
-      if (id === 1 || id > 0) {
+      if (id > 0) {
         setTimeout(() => {
+          // Generate slightly different data depending on the pipeline ID
+          const regions = ['North America', 'Europe', 'Asia Pacific', 'South America', 'Middle East'];
+          const products = ['Enterprise License', 'Cloud Storage 5TB', 'API Access Tier 3', 'Support Retainer', 'Premium SLA'];
+          const baseId = 900 + (id * 10);
+          
           setSalesData([
-            { id: 'TRX-901', date: '2026-09-03', product: 'Enterprise License', region: 'North America', amount: '$45,000' },
-            { id: 'TRX-902', date: '2026-09-03', product: 'Cloud Storage 5TB', region: 'Europe', amount: '$12,500' },
-            { id: 'TRX-903', date: '2026-09-02', product: 'API Access Tier 3', region: 'Asia Pacific', amount: '$8,200' },
-            { id: 'TRX-904', date: '2026-09-02', product: 'Support Retainer', region: 'North America', amount: '$15,000' },
-            { id: 'TRX-905', date: '2026-09-01', product: 'Enterprise License', region: 'South America', amount: '$45,000' }
+            { id: `TRX-${baseId + 1}`, date: '2026-09-03', product: products[id % 5], region: regions[(id+0) % 5], amount: `$${45000 + (id * 1500)}` },
+            { id: `TRX-${baseId + 2}`, date: '2026-09-03', product: products[(id+1) % 5], region: regions[(id+1) % 5], amount: `$${12500 + (id * 800)}` },
+            { id: `TRX-${baseId + 3}`, date: '2026-09-02', product: products[(id+2) % 5], region: regions[(id+2) % 5], amount: `$${8200 + (id * 400)}` },
+            { id: `TRX-${baseId + 4}`, date: '2026-09-02', product: products[(id+3) % 5], region: regions[(id+3) % 5], amount: `$${15000 + (id * 1000)}` },
+            { id: `TRX-${baseId + 5}`, date: '2026-09-01', product: products[(id+4) % 5], region: regions[(id+4) % 5], amount: `$${45000 + (id * 1500)}` }
           ]);
-          setMessage("Sales Data Pipeline execution completed! Data warehouse updated.");
+          setMessage(`Pipeline #${id} execution completed! Data warehouse updated.`);
           fetchPipelines();
         }, 1500);
       }
