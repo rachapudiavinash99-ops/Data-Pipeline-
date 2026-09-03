@@ -143,7 +143,6 @@ function App() {
                       <td style={{ padding: '1rem', display: 'flex', gap: '0.5rem' }}>
                         <button onClick={() => runPipeline(p.id)} style={{ padding: '0.375rem 0.75rem', cursor: 'pointer', backgroundColor: '#10b981', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Activity size={14} /> Execute</button>
                         <button onClick={() => storeData(p.id)} style={{ padding: '0.375rem 0.75rem', cursor: 'pointer', backgroundColor: '#8b5cf6', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Save size={14} /> Store Data</button>
-                        <button onClick={() => transferData(p.id)} style={{ padding: '0.375rem 0.75rem', cursor: 'pointer', backgroundColor: '#f59e0b', color: 'white', border: 'none', borderRadius: '4px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.25rem' }}><Send size={14} /> Transfer</button>
                       </td>
                     </tr>
                   ))}
