@@ -1,6 +1,11 @@
 from fastapi import APIRouter
+from pydantic import BaseModel
+from typing import Optional
 
 router = APIRouter()
+
+class PipelineCreate(BaseModel):
+    name: Optional[str] = None
 
 pipelines_db = [
     {"id": 1, "name": "Sales Data Pipeline", "status": "READY"}
@@ -11,11 +16,15 @@ def list_pipelines():
     return pipelines_db
 
 @router.post("/")
-def create_pipeline():
+def create_pipeline(pipeline_data: PipelineCreate = None):
     new_id = len(pipelines_db) + 1
+    
+    # Use the custom name if provided, else use default
+    pipeline_name = pipeline_data.name if pipeline_data and pipeline_data.name else f"Automated Data Pipeline {new_id}"
+    
     new_pipeline = {
         "id": new_id,
-        "name": f"Automated Data Pipeline {new_id}",
+        "name": pipeline_name,
         "status": "INITIALIZED"
     }
     pipelines_db.append(new_pipeline)

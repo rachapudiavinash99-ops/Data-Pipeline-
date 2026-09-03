@@ -22,9 +22,12 @@ function App() {
   };
 
   const createPipeline = async () => {
+    const customName = window.prompt("Enter a name for the new pipeline:", "My Custom Pipeline");
+    if (!customName) return; // Cancelled
+    
     setLoading(true);
     try {
-      const res = await axios.post('/api/pipelines/');
+      const res = await axios.post('/api/pipelines/', { name: customName });
       setMessage(res.data.message);
       await fetchPipelines();
     } catch (err) {
