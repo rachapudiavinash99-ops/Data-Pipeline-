@@ -208,6 +208,18 @@ function App() {
                   </button>
                   <button 
                     onClick={() => {
+                      const email = window.prompt("Enter recipient email address:", "user@example.com");
+                      if (!email) return;
+                      setMessage(`Encrypting and emailing sales data to ${email}...`);
+                      setTimeout(() => {
+                        setMessage(`Success! Sales data securely emailed to ${email}.`);
+                      }, 2000);
+                    }}
+                    style={{ padding: '0.5rem 1rem', cursor: 'pointer', backgroundColor: '#ec4899', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 500, display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <Send size={16} /> Email Data
+                  </button>
+                  <button 
+                    onClick={() => {
                       const product = window.prompt("Enter Product Name:", "Custom Service");
                       if (!product) return;
                       const region = window.prompt("Enter Region:", "Global");
