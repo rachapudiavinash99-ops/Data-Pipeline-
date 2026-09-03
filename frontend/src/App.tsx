@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Database, Cloud, FileSpreadsheet, Server, Activity, Plus, Save, Send, BarChart3 } from 'lucide-react';
+import { Activity, Plus, Save, Send, BarChart3 } from 'lucide-react';
 
 function App() {
   const [pipelines, setPipelines] = useState([]);
@@ -36,33 +36,35 @@ function App() {
   const runPipeline = async (id: number) => {
     setLoading(true);
     try {
-      const res = await axios.post(/api/pipelines/ + id + /run);
+      const res = await axios.post(`/api/pipelines/${id}/run`);
       setMessage(res.data.message);
       
-      setTimeout(() => {
-        setSalesData([
-          { id: 'TRX-901', date: '2026-09-03', product: 'Enterprise License', region: 'North America', amount: ',000' },
-          { id: 'TRX-902', date: '2026-09-03', product: 'Cloud Storage 5TB', region: 'Europe', amount: ',500' },
-          { id: 'TRX-903', date: '2026-09-02', product: 'API Access Tier 3', region: 'Asia Pacific', amount: ',200' },
-          { id: 'TRX-904', date: '2026-09-02', product: 'Support Retainer', region: 'North America', amount: ',000' },
-          { id: 'TRX-905', date: '2026-09-01', product: 'Enterprise License', region: 'South America', amount: ',000' }
-        ]);
-        setMessage("Sales Data Pipeline execution completed! Data warehouse updated.");
-      }, 1500);
+      if (id === 1 || id > 0) {
+        setTimeout(() => {
+          setSalesData([
+            { id: 'TRX-901', date: '2026-09-03', product: 'Enterprise License', region: 'North America', amount: '$45,000' },
+            { id: 'TRX-902', date: '2026-09-03', product: 'Cloud Storage 5TB', region: 'Europe', amount: '$12,500' },
+            { id: 'TRX-903', date: '2026-09-02', product: 'API Access Tier 3', region: 'Asia Pacific', amount: '$8,200' },
+            { id: 'TRX-904', date: '2026-09-02', product: 'Support Retainer', region: 'North America', amount: '$15,000' },
+            { id: 'TRX-905', date: '2026-09-01', product: 'Enterprise License', region: 'South America', amount: '$45,000' }
+          ]);
+          setMessage("Sales Data Pipeline execution completed! Data warehouse updated.");
+        }, 1500);
+      }
     } catch (err) {
-      setMessage(Error running pipeline  + id);
+      setMessage(`Error running pipeline ${id}`);
     }
     setLoading(false);
   };
 
   const storeData = (id: number) => {
-    setMessage(Storing data for Pipeline # + id +  into the primary data warehouse...);
-    setTimeout(() => setMessage(Data for Pipeline # + id +  successfully stored!), 1500);
+    setMessage(`Storing data for Pipeline #${id} into the primary data warehouse...`);
+    setTimeout(() => setMessage(`Data for Pipeline #${id} successfully stored!`), 1500);
   };
 
   const transferData = (id: number) => {
-    setMessage(Initiating data transfer for Pipeline # + id +  to secondary location...);
-    setTimeout(() => setMessage(Data for Pipeline # + id +  successfully transferred!), 1500);
+    setMessage(`Initiating data transfer for Pipeline #${id} to secondary location...`);
+    setTimeout(() => setMessage(`Data for Pipeline #${id} successfully transferred!`), 1500);
   };
 
   useEffect(() => {
